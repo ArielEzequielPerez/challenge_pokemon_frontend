@@ -1,16 +1,13 @@
-# Etapa 1 — Build
-FROM node:18-alpine AS build
+FROM node:20-alpine
+
 WORKDIR /app
 
+# Copiamos solo package.json primero para cachear dependencias
 COPY package*.json ./
+
 RUN npm install
 
-COPY . .
-RUN npm run build
+# El código real lo vamos a montar como volumen
+EXPOSE 5000
 
-# Etapa 2 — NGINX
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5000"]
