@@ -1,9 +1,5 @@
+import type { Pokemon } from '@/type/type'
 import { defineStore } from 'pinia'
-
-interface Pokemon {
-  name: string
-  url: string
-}
 
 export const usePokemonStore = defineStore('pokemon', {
   state: () => ({
@@ -30,10 +26,9 @@ export const usePokemonStore = defineStore('pokemon', {
         if (!response.ok) {
           throw new Error('Error al buscar Pokémon')
         }
-
         this.results = await response.json()
 
-      } catch (err: any) {
+      } catch (err:any) {
         this.error = err.message
         this.results = []
       } finally {

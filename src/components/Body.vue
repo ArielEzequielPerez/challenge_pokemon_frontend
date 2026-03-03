@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { usePokemonStore } from '@/stores/pokemon'
+import { usePokemonStore } from '@/stores/usePokemonStore'
 import { ref, watch } from 'vue'
 import Card from './Card.vue'
+import type { Pokemon } from '@/type/type'
 
 const store = usePokemonStore()
 
@@ -20,10 +21,15 @@ watch(search, (newValue) => {
   <div class="body-container">
     <div class="card">
       <h2>Buscar Pokémon</h2>
-      <FormKit type="text" name="pokemon" placeholder="Ej: Pikachu" v-model="search" />
+      <FormKit
+        type="text"
+        name="pokemon"
+        placeholder="Ej: Pikachu"
+        v-model="search"
+      />
     </div>
     <div class="pokemon-grid">
-      <Card v-for="pokemon in store.results" :key="pokemon.name" :pokemon="pokemon" />
+      <Card v-for="pokemon in store.results" :key="pokemon.id" :pokemon="pokemon" />
     </div>
   </div>
 </template>
